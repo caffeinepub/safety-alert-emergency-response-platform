@@ -1,0 +1,22 @@
+{
+  "frontend/src/index.css": "Global styles with emergency services color palette (emergency red, police blue, safety green, warning yellow) using OKLCH color system for both light and dark modes, plus custom emergency-specific animations.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with emergency services color tokens (emergency, police, safety, warning), custom shadows, and emergency-specific utilities.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for landing, auth, citizen dashboard, officer dashboard, and request details, wrapped with ThemeProvider and Toaster.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profile management, SOS requests, help request queries, message handling, and mutations with automatic cache invalidation.",
+  "frontend/src/hooks/useGeolocation.ts": "Custom hook managing browser geolocation API, requesting location permissions, capturing GPS coordinates, and handling permission states and errors.",
+  "frontend/src/hooks/useNotifications.ts": "Custom hook managing browser notification permissions and sending notifications with title and options.",
+  "frontend/src/components/Layout.tsx": "Application layout component with header displaying SafeAlert branding, navigation based on user role, logout functionality, and footer with attribution.",
+  "frontend/src/pages/LandingPage.tsx": "Landing page with hero section featuring safety shield, compelling safety message, prominent \"Check Here for Safety\" CTA button, features section explaining how the platform works, and dual sign-up options.",
+  "frontend/src/pages/AuthPage.tsx": "Authentication page integrating Internet Identity login, role selection for first-time users, and registration form flow with automatic dashboard redirection.",
+  "frontend/src/components/RoleSelector.tsx": "Role selection component allowing users to choose between citizen and officer roles during first-time registration with visual distinction.",
+  "frontend/src/components/RegistrationForm.tsx": "Registration form collecting name and mobile number with validation, calling backend register and saveCallerUserProfile methods, then redirecting to appropriate dashboard.",
+  "frontend/src/pages/CitizenDashboard.tsx": "Citizen dashboard featuring prominent emergency alert button, how-it-works guide, and notification manager for real-time updates.",
+  "frontend/src/components/EmergencyAlertButton.tsx": "Large circular emergency button that triggers location permission modal, captures GPS coordinates, sends SOS request to backend, and navigates to request detail page.",
+  "frontend/src/components/LocationPermissionModal.tsx": "Modal dialog requesting location access with clear messaging about why location is needed for emergency response.",
+  "frontend/src/pages/OfficerDashboard.tsx": "Officer dashboard with tabbed interface showing pending, active, and resolved emergency requests with real-time polling and notification manager.",
+  "frontend/src/components/HelpRequestCard.tsx": "Card component displaying individual help request details including citizen info, location, status badge, clickable phone number, accept button, and view details navigation.",
+  "frontend/src/components/StatusBadge.tsx": "Status badge component displaying color-coded request status (pending/accepted/resolved) with appropriate styling.",
+  "frontend/src/pages/RequestDetailPage.tsx": "Detailed view of emergency request showing full citizen information, location with Google Maps link, status, complete request button for officers, and integrated message thread.",
+  "frontend/src/components/MessageThread.tsx": "Real-time chat component displaying message history with auto-scroll, message input with send functionality, and polling for live updates.",
+  "frontend/src/components/NotificationManager.tsx": "Background component monitoring help requests and triggering browser notifications for new emergency alerts to officers."
+}

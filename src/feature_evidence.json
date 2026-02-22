@@ -1,0 +1,233 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-landing-page-with-a-compelling-safety-focused-caption-and-a-prominent-check-here-for-safety-button-that-serves-as-the-entry-point-to-the-emergency-alert-system",
+      "featureTitle": "Create a landing page with a compelling safety-focused caption and a prominent 'Check Here for Safety' button that serves as the entry point to the emergency alert system",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-dual-authentication-system-with-separate-sign-up-and-sign-in-flows-for-two-user-types-people-citizens-and-officer-police",
+      "featureTitle": "Implement dual authentication system with separate sign-up and sign-in flows for two user types: 'People' (citizens) and 'Officer' (police)",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/RoleSelector.tsx",
+        "frontend/src/pages/AuthPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-user-registration-form-that-collects-name-and-mobile-number-for-both-citizen-and-officer-sign-ups",
+      "featureTitle": "Create user registration form that collects name and mobile number for both citizen and officer sign-ups",
+      "files": [
+        "frontend/src/components/RegistrationForm.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-location-access-request-with-clear-permission-messaging-that-asks-allow-location-access-to-check-where-you-are-when-a-citizen-initiates-an-emergency-alert",
+      "featureTitle": "Implement location access request with clear permission messaging that asks 'Allow location access to check where you are' when a citizen initiates an emergency alert",
+      "files": [
+        "frontend/src/components/LocationPermissionModal.tsx",
+        "frontend/src/hooks/useGeolocation.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-capture-and-transmit-the-citizen-s-exact-live-location-to-the-nearest-police-station-when-they-send-a-help-request",
+      "featureTitle": "Capture and transmit the citizen's exact live location to the nearest police station when they send a help request",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/EmergencyAlertButton.tsx",
+        "frontend/src/pages/CitizenDashboard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-police-officer-dashboard-that-receives-emergency-help-requests-from-citizens-displays-their-location-name-and-mobile-number-and-allows-officers-to-accept-requests",
+      "featureTitle": "Build a police officer dashboard that receives emergency help requests from citizens, displays their location, name, and mobile number, and allows officers to accept requests",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/HelpRequestCard.tsx",
+        "frontend/src/pages/OfficerDashboard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-real-time-notification-system-that-alerts-police-officers-when-a-new-help-request-is-received-and-notifies-citizens-when-their-request-is-accepted",
+      "featureTitle": "Implement real-time notification system that alerts police officers when a new help request is received and notifies citizens when their request is accepted",
+      "files": [
+        "frontend/src/components/NotificationManager.tsx",
+        "frontend/src/hooks/useNotifications.ts",
+        "frontend/src/pages/CitizenDashboard.tsx",
+        "frontend/src/pages/OfficerDashboard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-in-app-calling-functionality-that-enables-police-officers-to-directly-call-the-citizen-s-mobile-number-from-the-help-request-interface",
+      "featureTitle": "Add in-app calling functionality that enables police officers to directly call the citizen's mobile number from the help request interface",
+      "files": [
+        "frontend/src/components/HelpRequestCard.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-messaging-system-that-allows-quick-communication-between-citizens-and-responding-officers",
+      "featureTitle": "Implement a messaging system that allows quick communication between citizens and responding officers",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/HelpRequestCard.tsx",
+        "frontend/src/components/MessageThread.tsx",
+        "frontend/src/pages/RequestDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-display-quick-response-indicators-and-status-updates-showing-when-police-have-received-accepted-and-are-responding-to-emergency-requests",
+      "featureTitle": "Display quick response indicators and status updates showing when police have received, accepted, and are responding to emergency requests",
+      "files": [
+        "frontend/src/components/HelpRequestCard.tsx",
+        "frontend/src/components/StatusBadge.tsx",
+        "frontend/src/pages/RequestDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-professional-trustworthy-visual-design-with-an-urgent-yet-calming-aesthetic-suitable-for-an-emergency-response-platform-using-colors-that-convey-safety-and-reliability-clear-typography-for-readability-under-stress-and-intuitive-layouts-that-prioritize-speed-and-clarity",
+      "featureTitle": "Apply a professional, trustworthy visual design with an urgent yet calming aesthetic suitable for an emergency response platform, using colors that convey safety and reliability, clear typography for readability under stress, and intuitive layouts that prioritize speed and clarity",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,2 +1,3 @@
-# safety-alert-emergency-response-platform
-Exported from Caffeine project: Safety Alert Emergency Response Platform
+## Safety Alert Emergency Response Platform
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`
