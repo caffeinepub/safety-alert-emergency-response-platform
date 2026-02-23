@@ -51,7 +51,7 @@ export interface backendInterface {
     getCallerUserRole(): Promise<UserRole>;
     getMessages(requestId: bigint): Promise<Array<ChatMessage>>;
     getRequestsByStatus(status: Type): Promise<Array<HelpRequest>>;
-    getUserProfile(user: Principal): Promise<UserProfile | null>;
+    getUserProfile(_user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     register(name: string, mobile: string, userType: string): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;

@@ -29,9 +29,8 @@ export function useRegister() {
   return useMutation({
     mutationFn: async ({ name, mobile, userType }: { name: string; mobile: string; userType: string }) => {
       if (!actor) throw new Error('Actor not available');
+      // Only call register - it creates the profile directly
       await actor.register(name, mobile, userType);
-      const profile: UserProfile = { name, mobile, userType };
-      await actor.saveCallerUserProfile(profile);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['currentUserProfile'] });

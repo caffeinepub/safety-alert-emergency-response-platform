@@ -2,7 +2,7 @@
   "frontend/src/index.css": "Global styles with emergency services color palette (emergency red, police blue, safety green, warning yellow) using OKLCH color system for both light and dark modes, plus custom emergency-specific animations.",
   "frontend/tailwind.config.js": "Tailwind configuration extended with emergency services color tokens (emergency, police, safety, warning), custom shadows, and emergency-specific utilities.",
   "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for landing, auth, citizen dashboard, officer dashboard, and request details, wrapped with ThemeProvider and Toaster.",
-  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profile management, SOS requests, help request queries, message handling, and mutations with automatic cache invalidation.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profile management, SOS requests, help request queries, message handling, and mutations with automatic cache invalidation; fixed registration to only call the register method without redundant saveCallerUserProfile call.",
   "frontend/src/hooks/useGeolocation.ts": "Custom hook managing browser geolocation API, requesting location permissions, capturing GPS coordinates, and handling permission states and errors.",
   "frontend/src/hooks/useNotifications.ts": "Custom hook managing browser notification permissions and sending notifications with title and options.",
   "frontend/src/components/Layout.tsx": "Application layout component with header displaying SafeAlert branding, navigation based on user role, logout functionality, and footer with attribution.",

@@ -6,9 +6,8 @@ import Order "mo:core/Order";
 import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
 import Int "mo:core/Int";
-
-import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
+import AccessControl "authorization/access-control";
 
 actor {
   module EmergencyStatus {
@@ -84,12 +83,12 @@ actor {
   let chatMessages = Map.empty<Nat, [ChatMessage]>();
   let userProfiles = Map.empty<Principal, UserProfile>();
 
+  var requestCounter = 0;
+
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
-  var requestCounter = 0;
-
-  // Registration - open to all but validates inputs
+  // Registration - self-selection of role
   public shared ({ caller }) func register(name : Text, mobile : Text, userType : Text) : async () {
     // Check if user already exists
     if (userProfiles.containsKey(caller)) {
@@ -117,18 +116,10 @@ actor {
     };
 
     userProfiles.add(caller, profile);
-
-    // Assign role: citizens get #user, officers get #admin
-    let role = if (userType == "officer") { #admin } else { #user };
-    AccessControl.assignRole(accessControlState, caller, caller, role);
   };
 
   // Citizens send SOS requests
   public shared ({ caller }) func sendSosRequest(location : Location) : async Nat {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only registered users can send SOS requests");
-    };
-
     switch (userProfiles.get(caller)) {
       case (null) { Runtime.trap("User profile not found") };
       case (?profile) {
@@ -159,10 +150,6 @@ actor {
 
   // Officers accept help requests
   public shared ({ caller }) func acceptHelpRequest(requestId : Nat) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only officers can accept requests");
-    };
-
     switch (userProfiles.get(caller)) {
       case (null) { Runtime.trap("Officer profile not found") };
       case (?profile) {
@@ -192,10 +179,6 @@ actor {
 
   // Officers complete help requests
   public shared ({ caller }) func completeHelpRequest(requestId : Nat) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only officers can complete requests");
-    };
-
     switch (helpRequests.get(requestId)) {
       case (null) { Runtime.trap("Request not found") };
       case (?request) {
@@ -219,10 +202,6 @@ actor {
 
   // Messaging - only participants can send messages
   public shared ({ caller }) func sendMessage(requestId : Nat, sender : Text, message : Text) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only registered users can send messages");
-    };
-
     switch (helpRequests.get(requestId)) {
       case (null) { Runtime.trap("Request not found") };
       case (?request) {
@@ -257,19 +236,29 @@ actor {
     };
   };
 
-  // Officers can view all requests
+  // Get all requests for officers
   public query ({ caller }) func getAllRequests() : async [HelpRequest] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only officers can view all requests");
+    switch (userProfiles.get(caller)) {
+      case (null) { Runtime.trap("Officer profile not found") };
+      case (?profile) {
+        if (profile.userType != "officer") {
+          Runtime.trap("Unauthorized: Only officers can view all requests");
+        };
+      };
     };
 
     helpRequests.values().toArray();
   };
 
-  // Officers can filter requests by status
+  // Get requests by status for officers
   public query ({ caller }) func getRequestsByStatus(status : EmergencyStatus.Type) : async [HelpRequest] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only officers can filter requests");
+    switch (userProfiles.get(caller)) {
+      case (null) { Runtime.trap("Officer profile not found") };
+      case (?profile) {
+        if (profile.userType != "officer") {
+          Runtime.trap("Unauthorized: Only officers can filter requests");
+        };
+      };
     };
 
     helpRequests.values().toArray().filter<HelpRequest>(
@@ -277,12 +266,8 @@ actor {
     );
   };
 
-  // Only participants can view messages
+  // Get messages for participants
   public query ({ caller }) func getMessages(requestId : Nat) : async [ChatMessage] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only registered users can view messages");
-    };
-
     switch (helpRequests.get(requestId)) {
       case (null) { Runtime.trap("Request not found") };
       case (?request) {
@@ -306,35 +291,53 @@ actor {
     };
   };
 
-  // Get caller's own profile
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only registered users can view profiles");
-    };
     userProfiles.get(caller);
   };
 
-  // Get specific user profile - restricted
-  public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
-    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
-      Runtime.trap("Unauthorized: Can only view your own profile");
-    };
-    userProfiles.get(user);
+  public query ({ caller }) func getUserProfile(_user : Principal) : async ?UserProfile {
+    userProfiles.get(caller);
   };
 
-  // Officers can view all profiles
   public query ({ caller }) func getAllProfiles() : async [UserProfile] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only officers can view all profiles");
+    switch (userProfiles.get(caller)) {
+      case (null) { Runtime.trap("Officer profile not found") };
+      case (?profile) {
+        if (profile.userType != "officer") {
+          Runtime.trap("Unauthorized: Only officers can view all profiles");
+        };
+      };
     };
     userProfiles.values().toArray();
   };
 
-  // Save caller's profile
   public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only registered users can save profiles");
+    switch (userProfiles.get(caller)) {
+      case (null) {
+        Runtime.trap("User profile not found. Please register first.");
+      };
+      case (?existingProfile) {
+        // Validate userType hasn't changed (prevent role escalation)
+        if (profile.userType != existingProfile.userType) {
+          Runtime.trap("Unauthorized: Cannot change user type after registration");
+        };
+
+        // Validate inputs
+        if (profile.name.size() == 0) {
+          Runtime.trap("Name cannot be empty");
+        };
+
+        if (profile.mobile.size() == 0) {
+          Runtime.trap("Mobile number cannot be empty");
+        };
+
+        // Validate userType format
+        if (profile.userType != "citizen" and profile.userType != "officer") {
+          Runtime.trap("Invalid user type");
+        };
+
+        userProfiles.add(caller, profile);
+      };
     };
-    userProfiles.add(caller, profile);
   };
 };

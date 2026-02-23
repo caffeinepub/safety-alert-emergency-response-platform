@@ -1,19 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Build an emergency safety alert platform that connects citizens in distress with nearby police officers through real-time location sharing, dual authentication, and instant communication.
+**Goal:** Fix the role assignment error by allowing users to self-select their role (citizen or officer) during registration without requiring author intervention.
 
 **Planned changes:**
-- Create a landing page with safety-focused messaging and "Check Here for Safety" entry button
-- Implement dual authentication system with separate sign-up/sign-in for "People" (citizens) and "Officer" (police) roles
-- Build registration forms collecting name and mobile number for both user types
-- Add location permission request with clear messaging when citizens initiate emergency alerts
-- Capture and transmit citizen's live GPS location to nearest police station on help requests
-- Create police officer dashboard displaying incoming help requests with citizen details (name, mobile, location)
-- Implement real-time notification system alerting officers of new requests and citizens of accepted requests
-- Add in-app calling functionality allowing officers to directly call citizens from request interface
-- Build messaging system for quick text communication between citizens and responding officers
-- Display status indicators showing request progression: Sent, Received, Accepted, Responding
-- Apply professional emergency-focused design with safety colors, clear typography, and intuitive urgent-action layouts
+- Remove the role-based access control restriction that prevents users from assigning their own roles during registration
+- Update the backend user profile creation logic to accept and store the user's selected role from the registration form without special authorization checks
+- Verify that the RegistrationForm component correctly passes the selected role to the backend during profile creation
 
-**User-visible outcome:** Citizens can sign up, send emergency help requests with their live location to nearby police officers, and receive real-time status updates and messages. Police officers can view incoming requests on a dashboard, accept them, call citizens directly, send messages, and update response status.
+**User-visible outcome:** Users can successfully register as either a citizen or officer by selecting their role during registration, and will be redirected to the appropriate dashboard without encountering the "roles was not found" error.

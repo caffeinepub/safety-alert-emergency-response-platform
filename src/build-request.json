@@ -1,242 +1,75 @@
 {
   "kind": "build_request",
-  "title": "Emergency Safety Alert Platform with Dual Authentication and Real-Time Response",
-  "projectName": "SafetyNet Alert",
+  "title": "Fix role assignment error - allow users to self-select roles during registration",
+  "projectName": "Safety Alert",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Create a landing page with a compelling safety-focused caption and a prominent 'Check Here for Safety' button that serves as the entry point to the emergency alert system",
+      "id": "REQ-12",
+      "text": "Remove the role-based access control restriction that requires only the author to assign roles, and allow users to self-select their role (citizen or officer) during the registration process",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "It asking roles was not found individual,only author can enrolled roles for accessing that is showing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can successfully register as either a citizen or officer without author intervention",
+        "The 'roles was not found' error no longer appears during registration",
+        "Role selection from the RoleSelector component is properly saved to the user profile",
+        "Both citizen and officer users can access their respective dashboards after registration"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Update the user profile creation logic in the backend to accept and store the user's selected role (citizen or officer) from the registration form without requiring special authorization",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "only author can enrolled roles for accessing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The createProfile or equivalent backend method accepts role parameter from any authenticated user",
+        "Role is properly stored in the user profile data structure",
+        "No authorization check prevents regular users from setting their own role during initial registration"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Verify that the RegistrationForm component correctly passes the selected role to the backend when creating a new user profile",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "on starting page best caption will need after that button will need to press"
+          "msg-6"
         ]
       },
       "acceptanceCriteria": [
-        "Landing page displays an impactful safety message",
-        "Prominent 'Check Here for Safety' button is clearly visible",
-        "Button leads to the emergency alert flow"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Implement dual authentication system with separate sign-up and sign-in flows for two user types: 'People' (citizens) and 'Officer' (police)",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "for people sign up as people ,and for police sign up as officer",
-          "There I need two types of login one for people and another one for police"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Sign-up page allows users to select their role: 'People' or 'Officer'",
-        "Separate registration flows for citizens and police officers",
-        "Sign-in page authenticates users based on their registered role",
-        "User role is stored and validated on backend"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Create user registration form that collects name and mobile number for both citizen and officer sign-ups",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "after page they need to enter their names and mobile number",
-          "User name Mobile number tags"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Registration form includes name input field",
-        "Registration form includes mobile number input field",
-        "Form validates mobile number format",
-        "User data is stored securely in backend"
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Implement location access request with clear permission messaging that asks 'Allow location access to check where you are' when a citizen initiates an emergency alert",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "after there they need to on location ,there in their mobile one notification will come on allow location access to check where u are like that"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Browser prompts for location permission when user initiates alert",
-        "Clear message explains why location access is needed",
-        "Location permission state is tracked",
-        "Fallback message if location is denied"
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Capture and transmit the citizen's exact live location to the nearest police station when they send a help request",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "there that person exact location will be sent to near cops or police station",
-          "Live location dot"
-        ]
-      },
-      "acceptanceCriteria": [
-        "System captures GPS coordinates when help request is sent",
-        "Location data is transmitted to backend",
-        "Backend identifies nearest police station or officers",
-        "Help request includes accurate location coordinates"
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Build a police officer dashboard that receives emergency help requests from citizens, displays their location, name, and mobile number, and allows officers to accept requests",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Near police station people or station will receive the request and accept",
-          "After getting msg to police they need to respond quickly"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Police dashboard shows incoming help requests in real-time",
-        "Each request displays citizen name, mobile number, and location",
-        "Officers can accept help requests",
-        "Dashboard updates when requests are accepted or resolved"
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Implement real-time notification system that alerts police officers when a new help request is received and notifies citizens when their request is accepted",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Notification access",
-          "If they will send message or do call quick response I need"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Police officers receive browser notifications for new help requests",
-        "Citizens receive notification when officer accepts their request",
-        "Notifications include essential alert information",
-        "Notification permissions are requested appropriately"
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Add in-app calling functionality that enables police officers to directly call the citizen's mobile number from the help request interface",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "after police will receive the help request they need to call the person",
-          "Mobile calling access"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Help request displays clickable phone number for officers",
-        "Clicking phone number initiates a call on the officer's device",
-        "Call button is prominently displayed on request details"
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Implement a messaging system that allows quick communication between citizens and responding officers",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Message sending",
-          "Messaging system for quick communication between citizens and police"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Citizens can send text messages to responding officers",
-        "Officers can reply to citizen messages",
-        "Messages are delivered in real-time",
-        "Message history is preserved for each help request"
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Display quick response indicators and status updates showing when police have received, accepted, and are responding to emergency requests",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "after sending the details they need to do quick respond and they need to come",
-          "Quick response indicators and status updates for emergency requests"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Help request shows status: Sent, Received, Accepted, Responding",
-        "Citizens see real-time status updates on their request",
-        "Officers can update status as they respond",
-        "Status changes trigger notifications"
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "text": "Apply a professional, trustworthy visual design with an urgent yet calming aesthetic suitable for an emergency response platform, using colors that convey safety and reliability, clear typography for readability under stress, and intuitive layouts that prioritize speed and clarity",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Design uses colors associated with emergency services and safety",
-        "Typography is highly legible for quick reading",
-        "Layout prioritizes critical actions and information",
-        "Visual hierarchy guides users through emergency workflows efficiently"
+        "The role selected via RoleSelector is included in the profile creation request",
+        "Registration completes successfully for both citizen and officer role selections",
+        "Users are redirected to the appropriate dashboard based on their selected role"
       ]
     }
   ],
   "constraints": [
-    "Location tracking must work accurately on mobile devices",
-    "System must handle real-time data updates for help requests",
-    "User authentication must distinguish between citizen and officer roles",
-    "Emergency alerts must be delivered with minimal latency"
+    "Maintain the existing dual authentication system for citizens and officers",
+    "Do not modify the RoleSelector component UI",
+    "Preserve the existing user profile data structure",
+    "Keep all existing emergency alert and dashboard functionality intact"
   ],
   "nonGoals": [
-    "Integration with actual emergency services dispatch systems",
-    "Payment processing for premium features",
-    "Historical crime data visualization",
-    "Multi-language support in initial version",
-    "Native mobile app development"
+    "Adding role change functionality after initial registration",
+    "Implementing admin-only role assignment features",
+    "Modifying the authentication flow beyond fixing the role assignment issue"
   ],
   "imageRequirements": {
-    "required": [
-      "Emergency alert icon for the main action button, red and white color scheme (emergency-icon.dim_128x128.png)",
-      "Police badge icon for officer authentication section (police-badge.dim_96x96.png)",
-      "Location pin icon for displaying help request locations (location-pin.dim_64x64.png)",
-      "Safety shield logo for landing page header (safety-shield.dim_256x256.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }
